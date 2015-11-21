@@ -70,9 +70,7 @@ class Gemini(object):
 
         payload['request'] = api_path
         payload['nonce'] = nonce
-        print payload
-        encoded_payload = base64.b64encode(str(payload))
-        print encoded_payload
+        encoded_payload = base64.b64encode(json.dumps(payload))
         signature = hmac.new(self.api_secret, encoded_payload, hashlib.sha384).hexdigest()
 
         headers = {

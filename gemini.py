@@ -83,8 +83,7 @@ class Gemini(object):
 
         response = requests.post(request_url, headers=headers)
 
-        #return response.json()
-        return response
+        return response.json()
 
     def get_symbols(self):
         return self.api_query('symbols')

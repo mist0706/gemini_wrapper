@@ -13,11 +13,7 @@ import requests
 
 PRIVATE_METHODS = [
                     'order',
-                    'order/new',
-                    'order/status',
-                    'order/cancel',
-                    'order/cancel/session',
-                    'orders/cancel/all',
+                    'orders',
                     'mytrades',
                     'balances',
                     'heartbeat'
@@ -64,7 +60,7 @@ class Gemini(object):
         api_path = '/v1/' + method
         request_url = base_url + api_path
 
-        if method in self.public_methods:
+        if method.split("/")[0] in self.public_methods:
             response = requests.get(request_url)
             return response.json()
 
@@ -91,9 +87,6 @@ class Gemini(object):
 
     def get_trades(self, symbol):
         return self.api_query('trades/'+ symbol)
-
-    def orders(self):
-        return self.api_query('orders', payload=payload)
 
     def order_new(self, symbol, amount, price, side, __type):
         payload = {
@@ -123,6 +116,9 @@ class Gemini(object):
 
     def order_cancel_session(self):
         return self.api_query('order/cancel/session')
+   
+    def orders(self):
+       return self.api_query('orders')
 
     def mytrades(self, symbol, timestamp, limit_trades=None):
         if not limit_trades:
